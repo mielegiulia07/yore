@@ -1,109 +1,332 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>YORE — Tattoo ink sterile e tracciabile. Rimozione più semplice.</title>
-<meta name="description" content="YORE: inchiostri da tatuaggio sterili e tracciabili oggi, pensati per una rimozione più semplice domani." />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>YORE · Scrollytelling astratto (mockup)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,340;0,9..144,500;1,9..144,420&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css" />
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff; --ink:#000000; --mute:#5f5f5f; --line:#d9d9d9; --card:rgba(255,255,255,.9);
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){ --bg:#101010; --ink:#f4f4f4; --mute:#a3a3a3; --line:#333; --card:rgba(16,16,16,.88); }
+}
+:root[data-theme="dark"]{ --bg:#101010; --ink:#f4f4f4; --mute:#a3a3a3; --line:#333; --card:rgba(16,16,16,.88); }
+html{ scroll-padding-top:env(safe-area-inset-top,0px); }
+*,*::before,*::after{ box-sizing:inherit; }
+body{ margin:0; background:var(--bg); color:var(--ink); font-family:Inter,"Helvetica Neue",Arial,sans-serif; -webkit-font-smoothing:antialiased; }
+
+.bar{ position:fixed; top:0; left:0; right:0; z-index:10; display:flex; align-items:center; justify-content:space-between;
+  padding:calc(18px + env(safe-area-inset-top,0px)) clamp(20px,4vw,48px) 18px; pointer-events:none; }
+.logo{ font-family:"Inter Tight",Inter,sans-serif; font-weight:800; font-size:22px; letter-spacing:-.02em; pointer-events:auto; }
+.btn{ pointer-events:auto; font:500 14px/1 Inter,sans-serif; color:var(--bg); background:var(--ink); border:1px solid var(--ink);
+  border-radius:999px; padding:11px 18px; text-decoration:none; display:inline-block; }
+.btn:focus-visible{ outline:2px solid var(--ink); outline-offset:3px; }
+.progress{ position:fixed; left:0; top:0; height:2px; background:var(--ink); width:0; z-index:11; }
+
+#story{ position:relative; }
+.sticky{ position:sticky; top:0; height:100vh; height:100svh; overflow:hidden; }
+canvas{ display:block; width:100%; height:100%; }
+.steps{ position:relative; margin-top:-100vh; margin-top:-100svh; }
+.step{ height:100vh; height:100svh; display:flex; align-items:center; padding:0 clamp(20px,5vw,80px); pointer-events:none; }
+.step.left{ justify-content:flex-start; }
+.step.right{ justify-content:flex-end; }
+.step.center{ justify-content:center; text-align:center; }
+.step.hero-step{ align-items:flex-end; justify-content:space-between; padding-bottom:clamp(28px,7vh,72px); gap:32px; }
+.card{ max-width:330px; background:var(--card); padding:20px 22px; border-radius:6px; pointer-events:auto; }
+.num{ font:500 13px/1 Inter,sans-serif; color:var(--mute); margin:0 0 14px; font-variant-numeric:tabular-nums; }
+h1,h2{ font-family:"Inter Tight",Inter,sans-serif; letter-spacing:-.025em; margin:0; }
+h1{ font-weight:800; font-size:clamp(40px,5.6vw,96px); line-height:.94; white-space:nowrap; }
+h2{ font-weight:700; font-size:clamp(26px,2.5vw,34px); line-height:1.08; }
+.card p{ margin:14px 0 0; font-size:16px; line-height:1.55; color:var(--mute); }
+.hero-side{ max-width:300px; text-align:right; }
+.hero-side p{ margin:0 0 10px; font-size:clamp(16px,1.3vw,18px); line-height:1.5; }
+.hint{ font-size:13px; color:var(--mute); }
+.tag{ display:inline-block; margin-top:16px; font-size:12px; font-weight:500; border:1px solid var(--ink); border-radius:999px; padding:5px 10px; }
+.final{ max-width:640px; padding:24px; pointer-events:auto; }
+.final h2{ font-size:clamp(34px,4.4vw,64px); line-height:1; }
+.final .btn{ margin-top:28px; }
+.note{ padding:40px clamp(20px,5vw,80px) 56px; font-size:13px; color:var(--mute); border-top:1px solid var(--line); }
+
+@media (max-width:760px){
+  .step,.step.left,.step.right{ align-items:flex-end; justify-content:center; padding-bottom:max(24px, env(safe-area-inset-bottom,0px)); }
+  .step.center{ align-items:flex-end; }
+  .step.hero-step{ flex-direction:column; align-items:flex-start; justify-content:flex-end; gap:14px; }
+  .hero-side{ text-align:left; }
+  .card{ max-width:none; width:100%; padding:16px 18px; }
+  .card p{ font-size:15px; }
+}
+</style>
 </head>
 <body>
-
-<canvas id="ink-canvas" aria-hidden="true"></canvas>
-
-<header class="site-nav">
-  <a class="brand" href="#top">YORE</a>
-  <a class="nav-cta" href="#fine">Waiting list</a>
+<div class="progress" id="progress"></div>
+<header class="bar">
+  <span class="logo">YORE</span>
+  <a class="btn" href="#fine">Waiting list</a>
 </header>
 
-<main id="top">
-
-  <section class="hero" data-stage="0">
-    <div class="hero-inner">
+<section id="story">
+  <div class="sticky"><canvas id="c" aria-hidden="true"></canvas></div>
+  <div class="steps">
+    <div class="step hero-step">
       <h1>YORE TATTOO.<br>YORE REMOVAL.</h1>
-      <p class="lede">Inchiostri sterili e tracciabili oggi. Una rimozione più semplice domani.</p>
-      <p class="scroll-hint"><span class="arrow">↓</span> Scorri per vedere come funziona</p>
+      <div class="hero-side">
+        <p>Inchiostri sterili e tracciabili oggi. Una rimozione più semplice domani.</p>
+        <span class="hint">Scorri per vedere come funziona</span>
+      </div>
     </div>
-  </section>
-
-  <section class="story-step" data-stage="1" id="step-01">
-    <div class="step-inner">
-      <span class="step-num">01</span>
-      <h2>Sappiamo cosa c'è dentro.</h2>
+    <div class="step left"><div class="card">
+      <p class="num">01</p><h2>Sappiamo cosa c'è dentro.</h2>
       <p>Tutto parte dall'inchiostro. YORE Unique Black è conforme REACH, e ogni lotto viene analizzato.</p>
-    </div>
-  </section>
-
-  <section class="story-step" data-stage="2" id="step-02">
-    <div class="step-inner">
-      <span class="step-num">02</span>
-      <h2>Una dose, un tatuaggio.</h2>
+    </div></div>
+    <div class="step right"><div class="card">
+      <p class="num">02</p><h2>Una dose, un tatuaggio.</h2>
       <p>Una monodose sterile, aperta solo per te. Durante la seduta il tatuatore scansiona il suo codice.</p>
-    </div>
-  </section>
-
-  <section class="story-step" data-stage="3" id="step-03">
-    <div class="step-inner">
-      <span class="step-num">03</span>
-      <h2>Ogni tatuaggio ha la sua traccia.</h2>
+    </div></div>
+    <div class="step left"><div class="card">
+      <p class="num">03</p><h2>Ogni tatuaggio ha la sua traccia.</h2>
       <p>Inchiostro, lotto, data e studio finiscono nel passaporto digitale. Sapere di cosa è fatto il tuo tatuaggio serve a curarlo, e un giorno a toglierlo meglio.</p>
-    </div>
-  </section>
-
-  <section class="story-step" data-stage="4" id="step-04">
-    <div class="step-inner">
-      <span class="step-num">04</span>
-      <h2>Il pigmento è una roccia liscia.</h2>
+    </div></div>
+    <div class="step right"><div class="card">
+      <p class="num">04</p><h2>Il pigmento è una roccia liscia.</h2>
       <p>Nella pelle il pigmento è inerte e non offre appigli. Per questo togliere un tatuaggio oggi è lungo e difficile.</p>
-    </div>
-  </section>
-
-  <section class="story-step" data-stage="5" id="step-05">
-    <div class="step-inner">
-      <span class="step-num">05</span>
-      <h2>Noi aggiungiamo i pioli.</h2>
+    </div></div>
+    <div class="step left"><div class="card">
+      <p class="num">05</p><h2>Noi aggiungiamo i pioli.</h2>
       <p>L'inchiostro YORE ha una superficie modificata: resta nella pelle, ma offre una presa.</p>
       <span class="tag">In ricerca</span>
-    </div>
-  </section>
-
-  <section class="story-step" data-stage="6" id="step-06">
-    <div class="step-inner">
-      <span class="step-num">06</span>
-      <h2>Il cerotto fa il resto.</h2>
+    </div></div>
+    <div class="step right"><div class="card">
+      <p class="num">06</p><h2>Il cerotto fa il resto.</h2>
       <p>I microaghi rilasciano un principio attivo che si lega al pigmento e ne aiuta l'estrazione. Funziona anche sui tatuaggi che hai già.</p>
       <span class="tag">In ricerca</span>
-    </div>
-  </section>
+    </div></div>
+    <div class="step center" id="fine"><div class="final">
+      <h2>Libertà di tatuarsi. Libertà di cambiare.</h2>
+      <a class="btn" href="#fine">Entra nella waiting list</a>
+    </div></div>
+  </div>
+</section>
+<div class="note">Mockup di scrollytelling astratto per YORE. Testi in bozza e forme generate dal vivo, da validare con il cliente.</div>
 
-  <section class="closing" data-stage="7">
-    <div class="closing-inner">
-      <h2>Libertà di tatuarsi.<br>Libertà di cambiare.</h2>
-      <a class="cta-button" href="#fine">Entra nella waiting list</a>
-    </div>
-  </section>
+<script>
+(() => {
+  const cv=document.getElementById('c'), ctx=cv.getContext('2d');
+  const story=document.getElementById('story'), bar=document.getElementById('progress');
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
+  const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+  const smooth=(f,a,b)=>ease(clamp((f-a)/(b-a)));
+  const bell=(f,c,w)=>smooth(f,c-w,c-w*.35)*(1-smooth(f,c+w*.35,c+w));
+  const col=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  let W=0,H=0,dpr=1,mobile=false,INK='#000',BG='#fff',C={},N=0;
+  let S=[], ST=[], ORD=[];
+  const mouse={x:-1e4,y:-1e4,sx:-1e4,sy:-1e4};
+  function rng(seed){ let s=seed>>>0; return ()=>{ s=(s*1664525+1013904223)>>>0; return s/4294967296; }; }
 
-  <section class="waitlist" id="fine" data-stage="7">
-    <div class="waitlist-inner">
-      <h3>Entra nella waiting list</h3>
-      <p>Sarai tra i primi a sapere quando YORE sarà disponibile nel tuo studio.</p>
-      <form id="waitlist-form" novalidate>
-        <input type="email" name="email" placeholder="La tua email" required aria-label="Email" />
-        <button type="submit">Iscrivimi</button>
-      </form>
-      <p id="waitlist-success" class="waitlist-success" hidden>Grazie — ti scriveremo presto.</p>
-    </div>
-  </section>
+  // assegna i punti di uno stato alle particelle (ordine raster coerente)
+  function assign(pts){
+    pts.sort((a,b)=>(a.y-b.y)||(a.x-b.x));
+    const M=pts.length, X=new Float32Array(N), Y=new Float32Array(N), R=new Float32Array(N), A=new Float32Array(N);
+    let prev=-1;
+    for(let i=0;i<N;i++){ const j=Math.min(M-1,Math.floor(i*M/N)), p=pts[j];
+      X[i]=p.x; Y[i]=p.y; R[i]=j!==prev?p.r:0; A[i]=p.a??1; prev=j; }
+    return {X,Y,R,A};
+  }
 
-  <footer class="draft-note">
-    <p>Mockup di scrollytelling astratto per YORE. Testi in bozza e forme generate dal vivo, da validare con il cliente.</p>
-  </footer>
+  function layout(){
+    dpr=Math.min(2,window.devicePixelRatio||1);
+    W=cv.clientWidth; H=cv.clientHeight; mobile=W<760;
+    cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr);
+    INK=col('--ink')||'#000'; BG=col('--bg')||'#fff';
+    const cx=W/2, cy=H*(mobile?.34:.46);
+    const s=mobile?Math.min(W*.34,H*.2):Math.min(W,H)*.26;
+    C={cx,cy,s};
+    const r=rng(11);
 
-</main>
+    // 0 · cerchio a retino radiale (hero)
+    const p0=[], st0=s/40;
+    for(let y=-s;y<=s;y+=st0) for(let x=-s;x<=s;x+=st0){ const d=Math.hypot(x,y)/s; if(d>1) continue;
+      const dark=Math.max(.035,1-Math.pow(d,1.7)); p0.push({x:cx+x,y:cy+y,r:st0/2*Math.sqrt(dark)*1.15,u:x/s,v:y/s}); }
+    p0.sort((a,b)=>(a.y-b.y)||(a.x-b.x));
+    N=p0.length;
+    ST=new Float32Array(N); for(let i=0;i<N;i++) ST[i]=r();
+    const s0={X:new Float32Array(N),Y:new Float32Array(N),R:new Float32Array(N),A:new Float32Array(N).fill(1),U:new Float32Array(N),V:new Float32Array(N)};
+    p0.forEach((p,i)=>{ s0.X[i]=p.x; s0.Y[i]=p.y; s0.R[i]=p.r; s0.U[i]=p.u; s0.V[i]=p.v; });
 
-<script src="script.js"></script>
+    // 1 · il punto
+    const s1={X:new Float32Array(N),Y:new Float32Array(N),R:new Float32Array(N),A:new Float32Array(N).fill(1)};
+    for(let i=0;i<N;i++){ s1.X[i]=cx+s0.U[i]*s*.14; s1.Y[i]=cy+s0.V[i]*s*.14; s1.R[i]=Math.max(.9,s*.006); }
+
+    // 2 · griglia di dosi, una sola piena
+    const p2=[], n2=7, sp2=s*.27;
+    for(let j=0;j<n2;j++) for(let i=0;i<n2;i++){ const cen=i===3&&j===3;
+      p2.push({x:cx+(i-3)*sp2, y:cy+(j-3)*sp2, r:cen?s*.1:s*.028, a:cen?1:.32}); }
+    const s2=assign(p2);
+
+    // 3 · pattern unico (passaporto)
+    const p3=[], n3=21, side=s*1.5, st3=side/(n3-1);
+    for(let j=0;j<n3;j++) for(let i=0;i<n3;i++){ const u=i/(n3-1)*2-1, v=j/(n3-1)*2-1;
+      let val=.5+.5*Math.sin(3.1*u+1.7*Math.sin(2.3*v))*Math.cos(2.7*v+.8*u+.6);
+      val=clamp(val*1.15-.05,.04,1);
+      p3.push({x:cx+u*side/2, y:cy+v*side/2, r:st3/2*Math.sqrt(val)*1.05}); }
+    const s3=assign(p3); C.side=side; C.st3=st3;
+
+    // 4/5 · sfera a retino diagonale
+    const p4=[], Rs=s*.85, st4=s/36, ca=Math.SQRT1_2;
+    for(let v=-Rs-st4;v<=Rs+st4;v+=st4) for(let u=-Rs-st4;u<=Rs+st4;u+=st4){
+      const x=u*ca-v*ca, y=u*ca+v*ca; if(Math.hypot(x,y)>Rs+st4) continue;
+      const t=((x+y)/Math.SQRT2+Rs)/(2*Rs); let q=clamp((t-.05)/.85); q=q*q*(3-2*q);
+      p4.push({x:cx+x, y:cy+y, r:st4/2*Math.sqrt(.035+.965*q)*1.45}); }
+    const s4=assign(p4); C.Rs=Rs;
+
+    // 6 · assorbiti dal cerotto
+    const s6={X:new Float32Array(N),Y:new Float32Array(N),R:new Float32Array(N),A:new Float32Array(N)};
+    ORD=new Float32Array(N);
+    for(let i=0;i<N;i++){ const dx=s4.X[i]-cx, dy=s4.Y[i]-cy;
+      s6.X[i]=cx+dx*.55; s6.Y[i]=cy+dy*.55; s6.R[i]=0; s6.A[i]=0;
+      ORD[i]=clamp(Math.hypot(dx,dy)/Rs); }
+
+    const s7={X:s6.X,Y:s6.Y,R:new Float32Array(N),A:new Float32Array(N)};
+    S=[s0,s1,s2,s3,s4,s4,s6,s7];
+    for(const st of [s1,s2,s3,s4]){ st.D=new Float32Array(N); for(let i=0;i<N;i++) st.D[i]=clamp(Math.hypot(st.X[i]-cx,st.Y[i]-cy)/(s*1.1)); }
+  }
+
+  function progress(){
+    const top=story.offsetTop, vh=innerHeight, max=story.offsetHeight-vh;
+    bar.style.width=(clamp((scrollY-top)/max)*100)+'%';
+    return clamp((scrollY-top)/vh,0,7);
+  }
+
+  function waves(f,now){
+    const a=.16*smooth(f,.5,1.2)*(1-smooth(f,5.9,6.2)) + .75*smooth(f,6.2,6.8);
+    if(a<=.005) return;
+    const close=smooth(f,6.2,6.9), n=mobile?18:28, band=C.s*(1.1+close*.6), {cx,cy}=C;
+    const x0=mobile?0:cx-Math.min(W*.42,C.s*3.4), x1=mobile?W:cx+Math.min(W*.42,C.s*3.4);
+    ctx.save(); ctx.strokeStyle=INK; ctx.lineWidth=.7;
+    const tm=reduce?0:now*.00025;
+    for(let k=0;k<n;k++){
+      const off=(k/(n-1)-.5)*band;
+      ctx.beginPath();
+      for(let x=x0;x<=x1;x+=8){
+        const u=(x-cx)/(x1-x0)*2;
+        const fade=Math.pow(Math.cos(Math.min(1,Math.abs(u))*Math.PI/2),1.2);
+        const y=cy+off*(.35+.65*(1-fade*close*.6))+Math.sin(u*3.2+k*.12+tm)*C.s*.08*(1+close)+Math.sin(u*7+k*.3)*C.s*.012;
+        x===x0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+      }
+      ctx.globalAlpha=a*(.45+.55*Math.sin(k/(n-1)*Math.PI));
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function rings(f){
+    const a=bell(f,1,.55); if(a<=.01) return;
+    const {cx,cy,s}=C, rr=[s*.32,s*.55,s*.8], txt=['Composizione nota','Conforme REACH','Lotto analizzato'];
+    ctx.save(); ctx.strokeStyle=INK; ctx.fillStyle=INK; ctx.lineWidth=1; ctx.font='500 13px Inter, sans-serif';
+    rr.forEach((R,i)=>{
+      const g=smooth(f,.55+i*.08,.95+i*.08)*(1-smooth(f,1.35,1.55));
+      ctx.globalAlpha=g*.9; ctx.beginPath(); ctx.arc(cx,cy,R*(.85+.15*g),0,6.283); ctx.stroke();
+      const ang=-.75+i*.62, mx=cx+R*Math.cos(ang), my=cy+R*Math.sin(ang);
+      ctx.beginPath(); ctx.arc(mx,my,3,0,6.283); ctx.fill();
+      if(!mobile||i!==1){ ctx.textAlign='left'; ctx.fillText(txt[i],mx+10,my+4); }
+    });
+    ctx.restore();
+  }
+
+  function brackets(f){
+    const a=bell(f,3,.55); if(a<=.01) return;
+    const {cx,cy}=C, h=C.side/2+C.st3*1.2, c=C.st3*1.6;
+    ctx.save(); ctx.globalAlpha=a; ctx.strokeStyle=INK; ctx.lineWidth=1.4; ctx.beginPath();
+    [[-1,-1],[1,-1],[-1,1],[1,1]].forEach(([sx,sy])=>{ const x=cx+sx*h, y=cy+sy*h; ctx.moveTo(x-sx*c,y); ctx.lineTo(x,y); ctx.lineTo(x,y-sy*c); });
+    ctx.stroke(); ctx.fillStyle=INK; ctx.font='500 13px Inter, sans-serif'; ctx.textAlign='center';
+    ctx.fillText('Passaporto A-0427', cx, cy+h+24);
+    ctx.restore();
+  }
+
+  function pegs(f){
+    const a=smooth(f,4.2,4.5)*(1-smooth(f,5.25,5.6)); if(a<=.01) return;
+    const {cx,cy,Rs,s}=C, n=24, pr=Math.max(3,s*.028);
+    ctx.save(); ctx.strokeStyle=INK; ctx.fillStyle=BG; ctx.lineWidth=1.3;
+    for(let i=0;i<n;i++){ const pa=smooth(f,4.2+i*.02,4.45+i*.02); if(pa<=0) continue;
+      const ang=i/n*6.283-1.57, R=Rs+pr*.5, x=cx+R*Math.cos(ang), y=cy+R*Math.sin(ang);
+      ctx.globalAlpha=a*pa; ctx.beginPath(); ctx.arc(x,y,pr*(.4+.6*pa),0,6.283); ctx.fill(); ctx.stroke(); }
+    ctx.restore();
+  }
+
+  function patch(f){
+    const inA=smooth(f,4.95,5.35), out=smooth(f,6.1,6.55); if(inA<=0||out>=1) return;
+    const {cx,cy,s}=C, w=s*1.05, h=s*1.05, y=(-h-40)+(cy-h/2+h+40)*inA - out*s*.6;
+    ctx.save(); ctx.globalAlpha=1-out; ctx.strokeStyle=INK; ctx.fillStyle=BG; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.roundRect?ctx.roundRect(cx-w/2,y,w,h,16):ctx.rect(cx-w/2,y,w,h); ctx.fill(); ctx.stroke();
+    const st=w/13, rr=Math.max(1.6,st*.2); ctx.lineWidth=1; ctx.beginPath();
+    for(let j=0;j<12;j++) for(let i=0;i<12;i++){ const x=cx-w/2+st*(i+1)+(j%2?st*.5:0), yy=y+st*(j+1)*.92+st*.1; if(x>cx+w/2-st*.6) continue;
+      ctx.moveTo(x+rr,yy); ctx.arc(x,yy,rr,0,6.283); }
+    ctx.stroke(); ctx.restore();
+  }
+
+  function fill(buckets){
+    ctx.fillStyle=INK;
+    buckets.forEach((bk,q)=>{ if(!bk.length||!q) return; ctx.globalAlpha=q/10; ctx.beginPath();
+      for(let j=0;j<bk.length;j+=3){ ctx.moveTo(bk[j]+bk[j+2],bk[j+1]); ctx.arc(bk[j],bk[j+1],bk[j+2],0,6.283); } ctx.fill(); });
+    ctx.globalAlpha=1;
+  }
+  function withClip(on,fn){ if(on){ ctx.save(); ctx.beginPath(); ctx.arc(C.cx,C.cy,C.Rs,0,6.283); ctx.clip(); } fn(); if(on) ctx.restore(); }
+  const mk=()=>Array.from({length:11},()=>[]);
+
+  function dots(f,now){
+    const k=Math.min(6,Math.floor(f)), a=S[k], b=S[k+1];
+    // dissolvenza tra forme diverse: 1->2, 2->3, 3->4
+    if(k>=1&&k<=3){
+      const A=mk(), B=mk();
+      for(let i=0;i<N;i++){
+        if(a.R[i]>0){ const t=ease(clamp((f-k-.12-a.D[i]*.28)/.3)); const r=a.R[i]*(1-t); if(r>.15&&a.A[i]>.03) A[Math.round(a.A[i]*10)].push(a.X[i],a.Y[i],r); }
+        if(b.R[i]>0){ const t=ease(clamp((f-k-.42-b.D[i]*.28)/.3)); const r=b.R[i]*t; if(r>.15&&b.A[i]>.03) B[Math.round(b.A[i]*10)].push(b.X[i],b.Y[i],r); }
+      }
+      fill(A); withClip(k+1===4,()=>fill(B));
+      return;
+    }
+    const buckets=mk();
+    const heroW=1-smooth(f,.05,.45), rad=Math.min(W,H)*.15;
+    for(let i=0;i<N;i++){
+      let t;
+      if(k===5) t=ease(clamp((f-5.35-ORD[i]*.5-(reduce?0:ST[i]*.06))/.3));
+      else if(k===0) t=ease(clamp((f-.2)/.55));
+      else t=ease(clamp((f-k-.2-(reduce?0:ST[i]*.22))/.45));
+      let ax=a.X[i], ay=a.Y[i];
+      if(k===0&&heroW>0&&!reduce){
+        ax+=Math.sin(now*.0007+S[0].V[i]*4)*1.4*heroW; ay+=Math.cos(now*.0006+S[0].U[i]*4)*1.4*heroW;
+        const dx=ax-mouse.sx, dy=ay-mouse.sy, d=Math.hypot(dx,dy);
+        if(d<rad&&d>0){ const q=Math.pow(1-d/rad,2)*28*heroW; ax+=dx/d*q; ay+=dy/d*q; }
+      }
+      const x=ax+(b.X[i]-ax)*t, y=ay+(b.Y[i]-ay)*t, r=a.R[i]+(b.R[i]-a.R[i])*t, al=a.A[i]+(b.A[i]-a.A[i])*t;
+      if(r<.15||al<.03) continue;
+      buckets[Math.round(al*10)].push(x,y,r);
+    }
+    withClip(k>=4&&k<=5, ()=>fill(buckets));
+  }
+
+  function frame(now){
+    const f=progress();
+    mouse.sx+=(mouse.x-mouse.sx)*.12; mouse.sy+=(mouse.y-mouse.sy)*.12;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.fillStyle=BG; ctx.fillRect(0,0,W,H);
+    waves(f,now); rings(f); dots(f,now); brackets(f); pegs(f); patch(f);
+    requestAnimationFrame(frame);
+  }
+
+  addEventListener('pointermove',e=>{ mouse.x=e.clientX; mouse.y=e.clientY; },{passive:true});
+  document.addEventListener('pointerleave',()=>{ mouse.x=mouse.y=-1e4; });
+  let rt; addEventListener('resize',()=>{ clearTimeout(rt); rt=setTimeout(layout,120); });
+  matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change',()=>layout());
+  (document.fonts?document.fonts.ready:Promise.resolve()).then(()=>{ layout(); requestAnimationFrame(frame); });
+})();
+</script>
 </body>
 </html>
