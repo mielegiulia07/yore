@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>YORE — Tattoo ink sterile e tracciabile. Rimozione più semplice.</title>
+<meta name="description" content="YORE: inchiostri da tatuaggio sterili e tracciabili oggi, pensati per una rimozione più semplice domani." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,340;0,9..144,500;1,9..144,420&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<canvas id="ink-canvas" aria-hidden="true"></canvas>
+
+<header class="site-nav">
+  <a class="brand" href="#top">YORE</a>
+  <a class="nav-cta" href="#fine">Waiting list</a>
+</header>
+
+<main id="top">
+
+  <section class="hero" data-stage="0">
+    <div class="hero-inner">
+      <h1>YORE TATTOO.<br>YORE REMOVAL.</h1>
+      <p class="lede">Inchiostri sterili e tracciabili oggi. Una rimozione più semplice domani.</p>
+      <p class="scroll-hint"><span class="arrow">↓</span> Scorri per vedere come funziona</p>
+    </div>
+  </section>
+
+  <section class="story-step" data-stage="1" id="step-01">
+    <div class="step-inner">
+      <span class="step-num">01</span>
+      <h2>Sappiamo cosa c'è dentro.</h2>
+      <p>Tutto parte dall'inchiostro. YORE Unique Black è conforme REACH, e ogni lotto viene analizzato.</p>
+    </div>
+  </section>
+
+  <section class="story-step" data-stage="2" id="step-02">
+    <div class="step-inner">
+      <span class="step-num">02</span>
+      <h2>Una dose, un tatuaggio.</h2>
+      <p>Una monodose sterile, aperta solo per te. Durante la seduta il tatuatore scansiona il suo codice.</p>
+    </div>
+  </section>
+
+  <section class="story-step" data-stage="3" id="step-03">
+    <div class="step-inner">
+      <span class="step-num">03</span>
+      <h2>Ogni tatuaggio ha la sua traccia.</h2>
+      <p>Inchiostro, lotto, data e studio finiscono nel passaporto digitale. Sapere di cosa è fatto il tuo tatuaggio serve a curarlo, e un giorno a toglierlo meglio.</p>
+    </div>
+  </section>
+
+  <section class="story-step" data-stage="4" id="step-04">
+    <div class="step-inner">
+      <span class="step-num">04</span>
+      <h2>Il pigmento è una roccia liscia.</h2>
+      <p>Nella pelle il pigmento è inerte e non offre appigli. Per questo togliere un tatuaggio oggi è lungo e difficile.</p>
+    </div>
+  </section>
+
+  <section class="story-step" data-stage="5" id="step-05">
+    <div class="step-inner">
+      <span class="step-num">05</span>
+      <h2>Noi aggiungiamo i pioli.</h2>
+      <p>L'inchiostro YORE ha una superficie modificata: resta nella pelle, ma offre una presa.</p>
+      <span class="tag">In ricerca</span>
+    </div>
+  </section>
+
+  <section class="story-step" data-stage="6" id="step-06">
+    <div class="step-inner">
+      <span class="step-num">06</span>
+      <h2>Il cerotto fa il resto.</h2>
+      <p>I microaghi rilasciano un principio attivo che si lega al pigmento e ne aiuta l'estrazione. Funziona anche sui tatuaggi che hai già.</p>
+      <span class="tag">In ricerca</span>
+    </div>
+  </section>
+
+  <section class="closing" data-stage="7">
+    <div class="closing-inner">
+      <h2>Libertà di tatuarsi.<br>Libertà di cambiare.</h2>
+      <a class="cta-button" href="#fine">Entra nella waiting list</a>
+    </div>
+  </section>
+
+  <section class="waitlist" id="fine" data-stage="7">
+    <div class="waitlist-inner">
+      <h3>Entra nella waiting list</h3>
+      <p>Sarai tra i primi a sapere quando YORE sarà disponibile nel tuo studio.</p>
+      <form id="waitlist-form" novalidate>
+        <input type="email" name="email" placeholder="La tua email" required aria-label="Email" />
+        <button type="submit">Iscrivimi</button>
+      </form>
+      <p id="waitlist-success" class="waitlist-success" hidden>Grazie — ti scriveremo presto.</p>
+    </div>
+  </section>
+
+  <footer class="draft-note">
+    <p>Mockup di scrollytelling astratto per YORE. Testi in bozza e forme generate dal vivo, da validare con il cliente.</p>
+  </footer>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
